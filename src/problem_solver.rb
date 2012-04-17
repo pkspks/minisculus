@@ -2,7 +2,6 @@ require 'httparty'
 require 'json'
 require_relative 'code_breakers'
 
-
 module Minisculus
   module ProblemSolving
 
@@ -15,14 +14,14 @@ module Minisculus
     end
 
     def initialize(params)
-      @question = params['question']
+      @encrypted_message = params['question']
       @get_url = params['reference-url']
       @post_url = (/\/questions(\/.*?).html/.match @get_url)[1]
     end
 
     def solve
-      #p "solving #{inspect}"
-      #p "answer #{answer}"
+      puts "solving - #{@encrypted_message}"
+      puts "answer - #{answer}\n\n"
       open_in_browser
       response = send(:class).put(@post_url, options: {headers: {'ContentType' => 'application/json'}}, body: {answer: answer}.to_json)
       #p "got #{response}"
@@ -36,12 +35,11 @@ module Minisculus
   end
 end
 
-
 class Question1
   include ::Minisculus::ProblemSolving
 
   def answer
-    MarkI.new(6).cipher(@question)
+    MarkI.new(6).cipher(@encrypted_message)
   end
 
   def next_question response
@@ -53,7 +51,7 @@ class Question2
   include ::Minisculus::ProblemSolving
 
   def answer
-    MarkII.new(9, 3).cipher(@question)
+    MarkII.new(9, 3).cipher(@encrypted_message)
   end
 
   def next_question response
@@ -65,7 +63,7 @@ class Question3
   include ::Minisculus::ProblemSolving
 
   def answer
-    MarkIV.new(4, 7).cipher(@question)
+    MarkIV.new(4, 7).cipher(@encrypted_message)
   end
 
   def next_question response
@@ -77,30 +75,32 @@ class Question4
   include ::Minisculus::ProblemSolving
 
   def answer
-    MarkIV.new(7, 2).decipher(@question)
+    MarkIV.new(7, 2).decipher(@encrypted_message)
   end
 
   def next_question response
-    Question5.new response
+    FinalQuestion.new response
   end
 end
 
-class Question5
+class FinalQuestion
   include ::Minisculus::ProblemSolving
 
   def initialize(params)
-    @question = params['code']
+    @encrypted_message = params['code']
     @get_url = params['reference-url']
     @email = params['email']
     @post_url = (/\/finish(\/.*?).html/.match @get_url)[1]
   end
 
   def solve
-    puts "decoded message : \n--------\n #{SeekingMarkIV.new.decipher(@question)}\n------------"
+    open_in_browser
+    puts "cracking the final code - #{@encrypted_message}"
+    puts "decoded message : \n--------\n #{SeekingMarkIV.new.decipher(@encrypted_message)}\n------------"
   end
 end
 
-class StartCommand
+class StartingQuestion
   include HTTParty
   base_uri 'http://minisculuschallenge.com'
 

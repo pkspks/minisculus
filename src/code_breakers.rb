@@ -43,12 +43,14 @@ class MarkIV < CodeBreaker
 end
 
 class SeekingMarkIV < CodeBreaker
+  KNOWN_WORDS = ['FURLIN', 'BUNKER']
+
   def decipher(message)
-     (0..50).each do|shift_count|
-        (0..50).each do |reverse_shift_count|
-          decoded = MarkIV.new(shift_count, reverse_shift_count).decipher(message)
-          return decoded if decoded.include?('FURLIN') || decoded.include?('BUNKER')
-        end
-     end
+    (0..50).each do |shift_count|
+      (0..50).each do |reverse_shift_count|
+        decoded = MarkIV.new(shift_count, reverse_shift_count).decipher(message)
+        return decoded if KNOWN_WORDS.any? { |word| decoded.include? word }
+      end
+    end
   end
 end

@@ -1,8 +1,8 @@
 require File.expand_path("../helper/spec_helper", __FILE__)
 
-describe StartCommand do
+describe StartingQuestion do
    it "should get the first question" do
-     command = StartCommand.new
+     command = StartingQuestion.new
      while command.respond_to? :solve
        command = command.solve
      end
@@ -30,9 +30,9 @@ describe Question4 do
   end
 end
 
-describe Question5 do
+describe FinalQuestion do
   it "should solve problem" do
-    solver = Question5.new({"code"=>"QT4e8MJYVhkls.27BL9,.MSqYSi'IUpAJKWg9Ul9p4o8oUoGy'ITd4d0AJVsLQp4kKJB2rz4dxfahwUa\"Wa.MS!k4hs2yY3k8ymnla.MOTxJ6wBM7sC0srXmyAAMl9t\"Wk4hs2yYTtH0vwUZp4a\"WhB2u,o6.!8Zt\"Wf,,eh5tk8WXv9UoM99w2Vr4!.xqA,5MSpWl9p4kJ2oUg'6evkEiQhC'd5d4k0qA'24nEqhtAQmy37il9p4o8vdoVr!xWSkEDn?,iZpw24kF\"fhGJZMI8nkI",
+    solver = FinalQuestion.new({"code"=>"QT4e8MJYVhkls.27BL9,.MSqYSi'IUpAJKWg9Ul9p4o8oUoGy'ITd4d0AJVsLQp4kKJB2rz4dxfahwUa\"Wa.MS!k4hs2yY3k8ymnla.MOTxJ6wBM7sC0srXmyAAMl9t\"Wk4hs2yYTtH0vwUZp4a\"WhB2u,o6.!8Zt\"Wf,,eh5tk8WXv9UoM99w2Vr4!.xqA,5MSpWl9p4kJ2oUg'6evkEiQhC'd5d4k0qA'24nEqhtAQmy37il9p4o8vdoVr!xWSkEDn?,iZpw24kF\"fhGJZMI8nkI",
                             "email"=>"minisculus@minisculuschallenge.com", "reference-url"=>"/finish/50763edaa9d9bd2a9516280e9044d885.html"})
     solver.solve
   end

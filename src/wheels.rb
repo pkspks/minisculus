@@ -1,4 +1,4 @@
-class Wheel
+module Keyboard
   @@keyboard = [
       "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
       "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
@@ -9,7 +9,9 @@ class Wheel
   ]
 end
 
-class TransposeWheel < Wheel
+class TransposeWheel
+  include Keyboard
+
   def initialize(shift_count)
     @shift_count = shift_count
   end
@@ -23,7 +25,9 @@ class TransposeWheel < Wheel
   end
 end
 
-class ReverseTransposeWheel < Wheel
+class ReverseTransposeWheel
+  include Keyboard
+
   def initialize(reverse_shift_count)
     @reverse_shift_count = reverse_shift_count * 2
   end
@@ -37,22 +41,22 @@ class ReverseTransposeWheel < Wheel
   end
 end
 
-class HistoryBasedWheel < Wheel
+class HistoryBasedWheel
+  include Keyboard
+
   def initialize
     @characters_seen = -1
   end
 
   def cipher(char, msg)
     last_position = @characters_seen == -1 ? 0 : @@keyboard.index(msg[@characters_seen])
-    decoded_char = char.bytes.first.shift_character(2 * last_position, @@keyboard)
     @characters_seen += 1
-    decoded_char
+    char.bytes.first.shift_character(2 * last_position, @@keyboard)
   end
 
   def decipher(char, msg)
     last_position = msg.empty? ? 0 : @@keyboard.index(msg[-1])
-    decoded_char = char.bytes.first.unshift_character(2 * last_position, @@keyboard)
-    decoded_char
+    char.bytes.first.unshift_character(2 * last_position, @@keyboard)
   end
 end
 
