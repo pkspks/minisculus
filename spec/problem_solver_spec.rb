@@ -14,6 +14,12 @@ describe Question2 do
   end
 end
 
+describe Question4 do
+  it "should solve problem" do
+    "solving #<Question4:0x007fd28158e638 @question=\"WZyDsL3u'0TfxP06RtSSF 'DbzhdyFIAu2 zF f5KE\\\"SOQTNA8A\\\"NCKPOKG5D9GSQE'M86IGFMKE6'K4pEVPK!bv83I\", @post_url=\"/questions/4baecf8ca3f98dc13eeecbac263cd3ed.html\">"
+  end
+end
+
 describe StartCommand do
    it "should get the first question" do
      command = StartCommand.new

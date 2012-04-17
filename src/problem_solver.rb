@@ -39,7 +39,7 @@ class Question1
   include ::Minisculus::ProblemSolving
 
   def answer
-    MarkI.new(6).decipher(@question)
+    MarkI.new(6).cipher(@question)
   end
 
   def next_question response
@@ -51,7 +51,7 @@ class Question2
   include ::Minisculus::ProblemSolving
 
   def answer
-    MarkII.new(9, 3).decipher(@question)
+    MarkII.new(9, 3).cipher(@question)
   end
 
   def next_question response
@@ -63,7 +63,19 @@ class Question3
   include ::Minisculus::ProblemSolving
 
   def answer
-    MarkIII.new(4, 7).decipher(@question)
+    MarkIV.new(4, 7).cipher(@question)
+  end
+
+  def next_question response
+    Question4.new response
+  end
+end
+
+class Question4
+  include ::Minisculus::ProblemSolving
+
+  def answer
+    MarkIV.new(7, 2).decipher(@question)
   end
 
   def next_question response
