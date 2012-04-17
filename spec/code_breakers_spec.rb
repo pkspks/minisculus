@@ -1,4 +1,4 @@
-require File.expand_path("../helper/spec_helper", __FILE__)
+require_relative 'spec_helper'
 
 describe MarkI do
   it "should shift alphabets by given count" do
@@ -21,12 +21,9 @@ end
 
 describe MarkIV do
   it "should decode" do
-    code_breaker = MarkIV.new(4, 7)
-
     MarkIV.new(2, 5).cipher('abc').should == 'SWZ'
-    code_breaker.cipher('The white cliffs of Alghero are visible at night').should == "JMl0kBp?20QixoivSc.2\"vvmls8KOk\"0jA,4kgt0OmUb,pm."
-    code_breaker.decipher("JMl0kBp?20QixoivSc.2\"vvmls8KOk\"0jA,4kgt0OmUb,pm.").should == 'The white cliffs of Alghero are visible at night'
-    code_breaker.decipher("WZyDsL3u'0TfxP06RtSSF 'DbzhdyFIAu2 zF f5KE\\\"SOQTNA8A\\\"NCKPOKG5D9GSQE'M86IGFMKE6'K4pEVPK!bv83I").should == "The rockets will strike at coordinates 49.977984 7.9257857 422979.83 5536735.81 on Oct. 7th"
+    MarkIV.new(4, 7).cipher('The white cliffs of Alghero are visible at night').should == "JMl0kBp?20QixoivSc.2\"vvmls8KOk\"0jA,4kgt0OmUb,pm."
+    MarkIV.new(7, 2).decipher("WZyDsL3u'0TfxP06RtSSF 'DbzhdyFIAu2 zF f5KE\"SOQTNA8A\"NCKPOKG5D9GSQE'M86IGFMKE6'K4pEVPK!bv83I").should == "The rockets will strike at coordinates 49.977984 7.9257857 422979.83 5536735.81 on Oct. 7th"
   end
 end
 
