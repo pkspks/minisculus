@@ -1,6 +1,6 @@
 require 'httparty'
 require 'json'
-require_relative 'simple_cipher'
+require_relative 'code_breakers'
 
 
 module Minisculus
