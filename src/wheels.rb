@@ -14,7 +14,7 @@ class TransposeWheel < Wheel
     @shift_count = shift_count
   end
 
-  def decipher(char)
+  def decipher(char, msg)
     char.bytes.first.shift_character(@shift_count, @@keyboard)
   end
 end
@@ -24,7 +24,36 @@ class ReverseTransposeWheel < Wheel
     @reverse_shift_count = reverse_shift_count * 2
   end
 
-  def decipher(char)
+  def decipher(char, msg)
     char.bytes.first.unshift_character(@reverse_shift_count, @@keyboard)
+  end
+end
+
+class HistoryBasedWheel < Wheel
+  def initialize
+    @last_position = 0
+    @characters_seen = -1
+  end
+
+  def decipher(char, msg)
+    last_position = @characters_seen == -1 ? 0 : @@keyboard.index(msg[@characters_seen])
+    decoded_char = char.bytes.first.shift_character(2 * last_position, @@keyboard)
+    @characters_seen += 1
+    decoded_char
+  end
+end
+
+
+class Fixnum
+  def shift_character shift_count, keyboard
+    index = keyboard.index chr
+    return keyboard[index + shift_count] unless index + shift_count > keyboard.length
+    keyboard[(index + shift_count) % keyboard.length]
+  end
+
+  def unshift_character shift_count, keyboard
+    index = keyboard.index chr
+    return keyboard[index - shift_count] unless index - shift_count < 0
+    keyboard[keyboard.length + (index - shift_count)]
   end
 end

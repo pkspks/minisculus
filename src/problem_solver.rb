@@ -55,6 +55,18 @@ class Question2
   end
 
   def next_question response
+    Question3.new response
+  end
+end
+
+class Question3
+  include ::Minisculus::ProblemSolving
+
+  def answer
+    MarkIII.new(4, 7).decipher(@question)
+  end
+
+  def next_question response
     p response
   end
 end
