@@ -41,3 +41,14 @@ class MarkIV < CodeBreaker
     super(TransposeWheel.new(shift_count), ReverseTransposeWheel.new(reverse_shift_count), HistoryBasedWheel.new)
   end
 end
+
+class SeekingMarkIV < CodeBreaker
+  def decipher(message)
+     (0..50).each do|shift_count|
+        (0..50).each do |reverse_shift_count|
+          decoded = MarkIV.new(shift_count, reverse_shift_count).decipher(message)
+          return decoded if decoded.include?('FURLIN') || decoded.include?('BUNKER')
+        end
+     end
+  end
+end

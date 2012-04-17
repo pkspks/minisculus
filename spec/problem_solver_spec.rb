@@ -3,7 +3,7 @@ require File.expand_path("../helper/spec_helper", __FILE__)
 describe StartCommand do
    it "should get the first question" do
      command = StartCommand.new
-     until command.nil?
+     while command.respond_to? :solve
        command = command.solve
      end
 

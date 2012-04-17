@@ -21,17 +21,17 @@ module Minisculus
     end
 
     def solve
-      p "solving #{inspect}"
-      p "answer #{answer}"
+      #p "solving #{inspect}"
+      #p "answer #{answer}"
       open_in_browser
       response = send(:class).put(@post_url, options: {headers: {'ContentType' => 'application/json'}}, body: {answer: answer}.to_json)
-      p "got #{response}"
+      #p "got #{response}"
       next_question response
     end
 
     def open_in_browser
-      p send(:class).get(@get_url)
-      system "open 'http://minisculuschallenge.com#{@get_url}'"
+      #p send(:class).get(@get_url)
+      #system "open 'http://minisculuschallenge.com#{@get_url}'"
     end
   end
 end
@@ -95,12 +95,8 @@ class Question5
     @post_url = (/\/finish(\/.*?).html/.match @get_url)[1]
   end
 
-  def answer
-    MarkIV.new(7, 2).decipher(@question)
-  end
-
-  def next_question response
-    p response
+  def solve
+    puts "decoded message : \n--------\n #{SeekingMarkIV.new.decipher(@question)}\n------------"
   end
 end
 
