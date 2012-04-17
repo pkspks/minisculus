@@ -60,7 +60,7 @@ end
 class Fixnum
   def shift_character shift_count, keyboard
     index = keyboard.index chr
-    return keyboard[index + shift_count] unless index + shift_count > keyboard.length
+    return keyboard[index + shift_count] unless index + shift_count >= keyboard.length
     keyboard[(index + shift_count) % keyboard.length]
   end
 

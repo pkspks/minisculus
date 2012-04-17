@@ -16,9 +16,7 @@ class CodeBreaker
 
   def decipher(message)
     wheels = @wheels.reverse
-    message.each_byte.inject('') { |msg, chi|
-      ch = chi.chr
-      p ch
+    message.each_char.inject('') { |msg, ch|
       msg+wheels.inject(ch) { |c, wheel|
         wheel.decipher(c, msg)
       }

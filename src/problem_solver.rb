@@ -16,20 +16,22 @@ module Minisculus
 
     def initialize(params)
       @question = params['question']
-      @post_url = params['reference-url']
+      @get_url = params['reference-url']
+      @post_url = (/\/questions(\/.*?).html/.match @get_url)[1]
     end
 
     def solve
       p "solving #{inspect}"
       p "answer #{answer}"
       open_in_browser
-      response = send(:class).put((/\/questions(\/.*?).html/.match @post_url)[1], options: {headers: {'ContentType' => 'application/json'}}, body: {answer: answer}.to_json)
+      response = send(:class).put(@post_url, options: {headers: {'ContentType' => 'application/json'}}, body: {answer: answer}.to_json)
+      p "got #{response}"
       next_question response
     end
 
     def open_in_browser
-      p send(:class).get(@post_url)
-      #system "open 'http://minisculuschallenge.com#{@post_url}'"
+      p send(:class).get(@get_url)
+      system "open 'http://minisculuschallenge.com#{@get_url}'"
     end
   end
 end
@@ -73,6 +75,25 @@ end
 
 class Question4
   include ::Minisculus::ProblemSolving
+
+  def answer
+    MarkIV.new(7, 2).decipher(@question)
+  end
+
+  def next_question response
+    Question5.new response
+  end
+end
+
+class Question5
+  include ::Minisculus::ProblemSolving
+
+  def initialize(params)
+    @question = params['code']
+    @get_url = params['reference-url']
+    @email = params['email']
+    @post_url = (/\/finish(\/.*?).html/.match @get_url)[1]
+  end
 
   def answer
     MarkIV.new(7, 2).decipher(@question)
