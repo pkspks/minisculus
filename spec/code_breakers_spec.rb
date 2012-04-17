@@ -4,6 +4,7 @@ describe MarkI do
   it "should shift alphabets by given count" do
     code_breaker = MarkI.new 6
 
+    code_breaker.cipher('abcdefghijklmnopqrstuvwxyz').should == 'ghijklmnopqrstuvwxyz.,?!\'"'
     code_breaker.cipher('Strong NE Winds!').should == 'Yzxutm5TK5cotjy2'
     code_breaker.decipher('Yzxutm5TK5cotjy2').should == 'Strong NE Winds!'
   end

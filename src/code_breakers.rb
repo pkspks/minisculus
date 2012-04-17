@@ -42,7 +42,7 @@ class MarkIV < CodeBreaker
   end
 end
 
-class SeekingMarkIV < CodeBreaker
+class SeekingMarkIV
   KNOWN_WORDS = ['FURLIN', 'BUNKER']
 
   def decipher(message)
