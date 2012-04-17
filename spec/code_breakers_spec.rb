@@ -2,20 +2,16 @@ require_relative 'spec_helper'
 
 describe MarkI do
   it "should shift alphabets by given count" do
-    code_breaker = MarkI.new 6
-
-    code_breaker.cipher('abcdefghijklmnopqrstuvwxyz').should == 'ghijklmnopqrstuvwxyz.,?!\'"'
-    code_breaker.cipher('Strong NE Winds!').should == 'Yzxutm5TK5cotjy2'
-    code_breaker.decipher('Yzxutm5TK5cotjy2').should == 'Strong NE Winds!'
+    MarkI.new(6).cipher('abcdefghijklmnopqrstuvwxyz').should == 'ghijklmnopqrstuvwxyz.,?!\'"'
+    MarkI.new(6).cipher('Strong NE Winds!').should == 'Yzxutm5TK5cotjy2'
+    MarkI.new(6).decipher('Yzxutm5TK5cotjy2').should == 'Strong NE Winds!'
   end
 end
 
 describe MarkII do
   it "should shift alphabets by given count" do
-    code_breaker = MarkII.new(2, 5)
-
-    code_breaker.cipher('abc').should == 'STU'
-    code_breaker.decipher('STU').should == 'abc'
+    MarkII.new(2, 5).cipher('abc').should == 'STU'
+    MarkII.new(2, 5).decipher('STU').should == 'abc'
   end
 end
 
@@ -29,9 +25,7 @@ end
 
 describe SeekingMarkIV do
   it "should decode" do
-    code_breaker = SeekingMarkIV.new
-
-    code_breaker.decipher("QT4e8MJYVhkls.27BL9,.MSqYSi'IUpAJKWg9Ul9p4o8oUoGy'ITd4d0AJVsLQp4kKJB2rz4dxfahwUa\"Wa.MS!k4hs2yY3k8ymnla.MOTxJ6wBM7sC0srXmyAAMl9t\"Wk4hs2yYTtH0vwUZp4a\"WhB2u,o6.!8Zt\"Wf,,eh5tk8WXv9UoM99w2Vr4!.xqA,5MSpWl9p4kJ2oUg'6evkEiQhC'd5d4k0qA'24nEqhtAQmy37il9p4o8vdoVr!xWSkEDn?,iZpw24kF\"fhGJZMI8nkI")
+    SeekingMarkIV.new.decipher("QT4e8MJYVhkls.27BL9,.MSqYSi'IUpAJKWg9Ul9p4o8oUoGy'ITd4d0AJVsLQp4kKJB2rz4dxfahwUa\"Wa.MS!k4hs2yY3k8ymnla.MOTxJ6wBM7sC0srXmyAAMl9t\"Wk4hs2yYTtH0vwUZp4a\"WhB2u,o6.!8Zt\"Wf,,eh5tk8WXv9UoM99w2Vr4!.xqA,5MSpWl9p4kJ2oUg'6evkEiQhC'd5d4k0qA'24nEqhtAQmy37il9p4o8vdoVr!xWSkEDn?,iZpw24kF\"fhGJZMI8nkI")
                 .should == "We must defend Furlin at all costs or the war will be lost! The supreme leader is in a secret BUNKER in Western FURLIN.  In this secret bunker he is preparing his new plans for world domination as the star of many YouTube satire videos.  By the way, does anybody here speak Russian?"
   end
 end
