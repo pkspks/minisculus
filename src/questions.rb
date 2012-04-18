@@ -1,5 +1,6 @@
 require_relative 'code_breakers'
-require_relative 'code_cracker'
+require 'httparty'
+require 'json'
 
 class StartingQuestion
   include Minisculus::Contact
@@ -11,7 +12,20 @@ class StartingQuestion
 end
 
 class Question1
-  include ::Minisculus::CodeCracking
+  include Minisculus::Contact
+
+  def initialize(params)
+    @encrypted_message = params['question']
+    @get_url = params['reference-url']
+    @post_url = (/\/questions(\/.*?).html/.match @get_url)[1]
+  end
+
+  def solve
+    puts "message - #{@encrypted_message}"
+    puts "solution - #{answer}\n\n"
+    response = send(:class).put(@post_url, body: {answer: answer}.to_json)
+    next_question response
+  end
 
   def answer
     MarkI.new(6).cipher(@encrypted_message)
@@ -23,58 +37,9 @@ class Question1
 end
 
 class Question2
-  include ::Minisculus::CodeCracking
-
-  def answer
-    MarkII.new(9, 3).cipher(@encrypted_message)
-  end
-
-  def next_question response
-    Question3.new response
-  end
-end
-
-class Question3
-  include ::Minisculus::CodeCracking
-
-  def answer
-    MarkIV.new(4, 7).cipher(@encrypted_message)
-  end
-
-  def next_question response
-    Question4.new response
-  end
-end
-
-class Question4
-  include ::Minisculus::CodeCracking
-
-  def answer
-    MarkIV.new(7, 2).decipher(@encrypted_message)
-  end
-
-  def next_question response
-    FinalQuestion.new response
-  end
-end
-
-class FinalQuestion
-  include Minisculus::Contact
-  include Minisculus::OpensInBrowser
-
   def initialize(params)
-    @encrypted_message = params['code']
+    @encrypted_message = params['question']
     @get_url = params['reference-url']
-  end
-
-  def solve
-    open_in_browser @get_url
-    puts "cracking the final code - #{@encrypted_message}"
-    puts "decoded message : \n--------\n #{answer}\n--------"
-    answer
-  end
-
-  def answer
-    SeekingMarkIV.new.decipher(@encrypted_message)
+    @post_url = (/\/questions(\/.*?).html/.match @get_url)[1]
   end
 end
